@@ -24,3 +24,28 @@
 4. Start Local Server
       
       `npm start`
+
+Local:
+1. mw-app-prefix-consumer-group-issues > Add ngrok
+   MW_TARGET: https://aa79-14-195-204-154.ngrok-free.app
+
+2. Update index.html
+
+3. Run cmds as:
+```angular2html
+cd ~/workspace/integrations/misc/github-integration/examples/shopping-cart-react
+npm run build
+NODE_TLS_REJECT_UNAUTHORIZED='0' npx @middleware.io/sourcemap-uploader upload --apiKey kwksdufvomzzbjtzvyvqvkcznnzjaelgbhyk -bu https://bwfhm.mw.lc/api/v1/rum/getSasUrl -p build --appVersion 1.0.0
+serve build
+```
+
+Stage:
+1. Update index.html
+
+2. Run cmds as:
+```angular2html
+cd ~/workspace/integrations/misc/github-integration/examples/shopping-cart-react
+npm run build
+NODE_TLS_REJECT_UNAUTHORIZED='0' npx @middleware.io/sourcemap-uploader upload --apiKey <KEY> -bu <TARGET>/api/v1/rum/getSasUrl -p build --appVersion 1.0.0
+serve build
+```
