@@ -5,6 +5,7 @@ import Sizes from './components/Sizes';
 import Products from './components/Products';
 import Cart from './components/Cart';
 import filterList from './components/filterList'
+import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => {
 
@@ -73,17 +74,19 @@ const App = () => {
       else {
         productList.splice(index, 1);
       }
-    } 
+    }
     setCart(productList);
     localStorage.setItem("cart", JSON.stringify(productList));
   }
   
   return (
     <div className="App">
-      <Sizes selectedSizes={selectedSizes} setSize={setSize} />
-      <Products products={products} sortProducts={sortProducts} addToCart={addToCart} />
-      <Cart products={cart} changeQuantity={changeQuantity} />
-      <button onClick={() => { throw new Error("Generate Error: button clicked.")}}>Checkout</button>
+      <ErrorBoundary>
+        <Sizes selectedSizes={selectedSizes} setSize={setSize} />
+        <Products products={products} sortProducts={sortProducts} addToCart={addToCart} />
+        <Cart products={cart} changeQuantity={changeQuantity} />
+        <button onClick={() => { throw new Error("Generate Error: button clicked.")}}>Checkout</button>
+      </ErrorBoundary>
     </div>
   );
 }
