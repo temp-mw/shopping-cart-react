@@ -85,7 +85,7 @@ const App = () => {
         <Sizes selectedSizes={selectedSizes} setSize={setSize} />
         <Products products={products} sortProducts={sortProducts} addToCart={addToCart} />
         <Cart products={cart} changeQuantity={changeQuantity} />
-        <button onClick={() => { throw new Error("Generate Error: button clicked.")}}Checkout</button>
+        <button onClick={() => { throw new Error("Generate Error: button clicked.")}}>Checkout</button>
       </ErrorBoundary>
     </div>
   );
