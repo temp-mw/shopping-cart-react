@@ -51,29 +51,40 @@ const App = () => {
 
   const addToCart = (item) => {
     const productList = [...cart];
-    if(!productList.includes(item)) {
-      productList.push(item);
+    const existingIndex = productList.findIndex(p => p.id === item.id);
+    if (existingIndex === -1) {
+      productList.push({ ...item, quantity: 1 });
+    } else {
+      productList[existingIndex] = {
+        ...productList[existingIndex],
+        quantity: Number(productList[existingIndex].quantity) + 1,
+      };
     }
-    const index = productList.indexOf(item);
-    productList[index].quantity++;
     setCart(productList);
     localStorage.setItem("cart", JSON.stringify(productList));
   }
 
   const changeQuantity = (item, e) => {
     const productList = [...cart];
-    const index = productList.indexOf(item);
+    const index = productList.findIndex(p => p.id === item.id);
+    if (index === -1) return;
     if(e === '+') {
-      productList[index].quantity++;
+      productList[index] = {
+        ...productList[index],
+        quantity: Number(productList[index].quantity) + 1,
+      };
     }
     else {
-      if(productList[index].quantity > 1) {
-        productList[index].quantity--;
+      if(Number(productList[index].quantity) > 1) {
+        productList[index] = {
+          ...productList[index],
+          quantity: Number(productList[index].quantity) - 1,
+        };
       }
       else {
         productList.splice(index, 1);
       }
-    } 
+    }
     setCart(productList);
     localStorage.setItem("cart", JSON.stringify(productList));
   }
@@ -84,10 +95,8 @@ const App = () => {
       <Products products={products} sortProducts={sortProducts} addToCart={addToCart} />
       <Cart products={cart} changeQuantity={changeQuantity} />
       <button onClick={() => {
-        const x = undefined;
-        const funcs = ["forEach", "map", "slice", "reduce"];
-        const func = funcs[Math.floor(Math.random() * funcs.length)];
-          x[func](); // x is undefined
+        const total = cart.reduce((sum, item) => sum + item.price * Number(item.quantity), 0);
+        alert(`Checkout - Subtotal: $ ${total.toFixed(2)}`);
       }}>Checkout</button>
     </div>
   );
